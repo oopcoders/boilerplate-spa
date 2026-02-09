@@ -1,0 +1,16 @@
+@if (user()) {
+<mat-card class="example-card" appearance="outlined">
+    <mat-card-header>
+        @if (user()!.displayName) {
+        <mat-card-title>{{ user()!.displayName }}</mat-card-title>
+        }
+        @if (user()!.email) {
+        <mat-card-subtitle>{{ user()!.email }}</mat-card-subtitle>
+        }
+    </mat-card-header>
+</mat-card>
+
+<p><button matButton (click)="logout()">Logout</button></p>
+} @else {
+<p>You are logged out</p>
+}

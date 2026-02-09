@@ -1,0 +1,15 @@
+    .row {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 12px;
+        padding: 12px 0;
+    }
+
+    .label {
+        font-weight: 600;
+        opacity: 0.8;
+    }
+
+    .value {
+        word-break: break-word;
+    }

@@ -1,0 +1,26 @@
+@use '@angular/material' as mat;
+
+.container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    mat-sidenav {
+        @include mat.sidenav-overrides((container-shape: 0px, container-background-color: var(--mat-sys-surface)));
+    }
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.logo-title {
+    display: inline-block;
+    padding: 10px 0px;
+}
+
+section mat-toolbar button {
+    margin: auto 5px auto 1px;
+}

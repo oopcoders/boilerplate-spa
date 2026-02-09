@@ -1,0 +1,27 @@
+<mat-toolbar>
+	<button matIconButton class="icon" aria-label="icon-button with menu icon">
+		<mat-icon>menu</mat-icon>
+	</button>
+	<span>BOILERPLATE</span>
+	<span class="spacer"></span>
+
+
+
+	@if (isLoggedIn$ | async) {
+	<button matButton [matMenuTriggerFor]="menu" class="icon">
+		<mat-icon>account_circle</mat-icon> Menu
+	</button>
+	<mat-menu #menu="matMenu">
+		<button mat-menu-item (click)="logout()">Logout</button>
+		<button mat-menu-item>Item 2</button>
+	</mat-menu>
+	}@else{
+	<button matIconButton (click)="openRegisterDialog()" class="icon" aria-label="login icon"
+		title="Create new account">
+		<mat-icon>person_add</mat-icon>
+	</button>
+	<button matIconButton (click)="openLoginDialog()" class="icon" aria-label="login icon" title="Login">
+		<mat-icon>login</mat-icon>
+	</button>
+	}
+</mat-toolbar>

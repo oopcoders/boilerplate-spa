@@ -1,0 +1,12 @@
+<mat-nav-list role="list">
+    <mat-list-item>
+        <mat-icon matListItemIcon>dashboard</mat-icon>
+        <a matListItemTitle routerLink="">Dashboard</a>
+    </mat-list-item>
+    @if (isLoggedIn$ | async) {
+    <mat-list-item>
+        <mat-icon matListItemIcon>contact_mail</mat-icon>
+        <a matListItemTitle routerLink="/users">Users</a>
+    </mat-list-item>
+    }
+</mat-nav-list>

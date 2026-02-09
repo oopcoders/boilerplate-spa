@@ -1,0 +1,28 @@
+.full-width {
+    width: 100%;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+}
+
+.actions-cell {
+    text-align: right;
+    width: 1%;
+    white-space: nowrap;
+}
+
+.table-shell {
+    position: relative;
+}
+
+.loading-overlay {
+    position: absolute;
+    inset: 0; // top/right/bottom/left: 0
+    display: grid;
+    place-items: center;
+    z-index: 10;
+    border-radius: 4px;
+}
