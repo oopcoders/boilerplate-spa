@@ -35,14 +35,33 @@ export interface ApiUserResponse {
 }
 
 
-
 export interface ApiRegisterPayload extends ApiLoginPayload {
   displayName: string;
+}
+
+export interface ApiForgotPasswordPayload {
+  email: string
+}
+
+export interface ApiForgotPasswordResponse {
+  message: string
+}
+
+export interface ApiResetPasswordPayload {
+  email: string,
+  token: string,
+  newPassword: string
+}
+
+export interface ApiResetPasswordResponse {
+  message: string
 }
 
 export interface ApiFeatureState {
   login: ApiRequestState<ApiLoginUser>;
   register: ApiRequestState<ApiAuthResponse>;
+  forgotPassword: ApiRequestState<ApiForgotPasswordResponse>;
+  resetPassword: ApiRequestState<ApiResetPasswordResponse>;
   users: ApiRequestState<ApiUserResponse[]>;
   user: ApiRequestState<ApiUserResponse>
 }
@@ -50,6 +69,8 @@ export interface ApiFeatureState {
 export const initialApiFeatureState: ApiFeatureState = {
   login: createInitialRequestState<ApiLoginUser>(),
   register: createInitialRequestState<ApiAuthResponse>(),
+  forgotPassword: createInitialRequestState<ApiForgotPasswordResponse>(),
+  resetPassword: createInitialRequestState<ApiResetPasswordResponse>(),
   users: createInitialRequestState<ApiUserResponse[]>(),
   user: createInitialRequestState<ApiUserResponse>()
 };

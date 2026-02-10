@@ -35,6 +35,7 @@ const reducerInternal = createReducer(
       data: null,
     },
   })),
+
   // ---- REGISTER START ----
   on(ApiActions.register, (state) => ({
     ...state,
@@ -66,6 +67,67 @@ const reducerInternal = createReducer(
     },
   })),
 
+  // ---- FORGOT PASSWORD ----
+  on(ApiActions.forgotPassword, (state) => ({
+    ...state,
+    forgotPassword: {
+      loading: false,
+      error: null,
+      data: null,
+    },
+  })),
+
+  // ---- FORGOT PASSWORD SUCCESS ----
+  on(ApiActions.forgotPasswordSuccess, (state, { response }) => ({
+    ...state,
+    forgotPassword: {
+      loading: false,
+      error: null,
+      data: response,
+    },
+  })),
+
+  // ---- FORGOT PASSWORD FAILURE ----
+  on(ApiActions.forgotPasswordFailure, (state, { error }) => ({
+    ...state,
+    forgotPassword: {
+      loading: false,
+      error,
+      data: null,
+    },
+  })),
+
+  // ---- RESET PASSWORD ----
+  on(ApiActions.resetPassword, (state) => ({
+    ...state,
+    resetPassword: {
+      loading: false,
+      error: null,
+      data: null,
+    },
+  })),
+
+  // ---- RESET PASSWORD SUCCESS ----
+  on(ApiActions.resetPasswordSuccess, (state, { response }) => ({
+    ...state,
+    resetPassword: {
+      loading: false,
+      error: null,
+      data: response,
+    },
+  })),
+
+  // ---- RESET PASSWORD FAILURE ----
+  on(ApiActions.resetPasswordFailure, (state, { error }) => ({
+    ...state,
+    resetPassword: {
+      loading: false,
+      error,
+      data: null,
+    },
+  })),
+
+
   on(ApiActions.logout, (state) => ({
     ...state,
     register: {
@@ -90,6 +152,7 @@ const reducerInternal = createReducer(
       data: null,
     },
   })),
+
   on(ApiActions.loadUsersSuccess, (state, { response }) => ({
     ...state,
     users: {
@@ -108,6 +171,7 @@ const reducerInternal = createReducer(
       data: null,
     },
   })),
+
   on(ApiActions.loadUser, (state) => ({
     ...state,
     users: {
@@ -116,6 +180,7 @@ const reducerInternal = createReducer(
       data: null,
     },
   })),
+
   // ---- LOAD USER BY  SUCCESS ----
   on(ApiActions.loadUserSuccess, (state, { response }) => ({
     ...state,

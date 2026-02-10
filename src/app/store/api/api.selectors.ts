@@ -33,4 +33,16 @@ export const selectApiUserLoading = createSelector(selectApiUser, (r) => r.loadi
 export const selectApiUserError = createSelector(selectApiUser, (r) => r.error);
 export const selectApiUserData = createSelector(selectApiUser, (u) => u.data);
 
+export const selectApiForgotPassword = createSelector(selectApi, (s) => s.forgotPassword);
+
+export const selectApiForgotPasswordLoading = createSelector(selectApiForgotPassword, (r) => r.loading);
+export const selectApiForgotPasswordError = createSelector(selectApiForgotPassword, (r) => r.error);
+export const selectApiForgotPasswordData = createSelector(selectApiForgotPassword, (u) => u.data);
+
+export const selectApiResetPassword = createSelector(selectApi, (s) => s.resetPassword);
+
+export const selectApiResetPasswordLoading = createSelector(selectApiResetPassword, (r) => r.loading);
+export const selectApiResetPasswordError = createSelector(selectApiResetPassword, (r) => r.error);
+export const selectApiResetPasswordData = createSelector(selectApiResetPassword, (u) => u.data);
+
 

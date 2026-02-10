@@ -58,6 +58,30 @@ export class ApiEffects {
     ),
   );
 
+  forgotPassword$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ApiActions.forgotPassword),
+      switchMap(({ payload }) =>
+        this.api.forgotPassword(payload).pipe(
+          map((response) => ApiActions.forgotPasswordSuccess({ response })),
+          catchError((err) => of(ApiActions.forgotPasswordFailure({ error: toErrorMessage(err) }))),
+        ),
+      ),
+    ),
+  );
+
+  resetPassword$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ApiActions.resetPassword),
+      switchMap(({ payload }) =>
+        this.api.resetPassword(payload).pipe(
+          map((response) => ApiActions.resetPasswordSuccess({ response })),
+          catchError((err) => of(ApiActions.resetPasswordFailure({ error: toErrorMessage(err) }))),
+        ),
+      ),
+    ),
+  );
+
   // ✅ Persist token on successful login
   persistToken$ = createEffect(
     () =>
