@@ -1,12 +1,32 @@
-<mat-nav-list role="list">
-    <mat-list-item>
-        <mat-icon matListItemIcon>dashboard</mat-icon>
-        <a matListItemTitle routerLink="">Dashboard</a>
-    </mat-list-item>
-    @if (isLoggedIn$ | async) {
-    <mat-list-item>
-        <mat-icon matListItemIcon>contact_mail</mat-icon>
-        <a matListItemTitle routerLink="/users">Users</a>
-    </mat-list-item>
-    }
-</mat-nav-list>
+<div class="sidenav-container">
+    <mat-nav-list role="list">
+        <mat-list-item>
+            <mat-icon matListItemIcon>dashboard</mat-icon>
+            <a matListItemTitle routerLink="">Dashboard</a>
+        </mat-list-item>
+        @if (isLoggedIn$ | async) {
+        <mat-list-item>
+            <mat-icon matListItemIcon>contact_mail</mat-icon>
+            <a matListItemTitle routerLink="/users">Users</a>
+        </mat-list-item>
+        }
+    </mat-nav-list>
+
+    <mat-nav-list role="list" class="authentication">
+        @if (isLoggedIn$ | async) {
+        <mat-list-item>
+            <mat-icon matListItemIcon>logout</mat-icon>
+            <span matListItemTitle (click)="logout()">Logout</span>
+        </mat-list-item>
+        } @else {
+        <mat-list-item>
+            <mat-icon matListItemIcon>account_circle</mat-icon>
+            <a matListItemTitle routerLink="/auth/login">Sign In</a>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon matListItemIcon>add_2</mat-icon>
+            <a matListItemTitle routerLink="/auth/register">Create Account</a>
+        </mat-list-item>
+        }
+    </mat-nav-list>
+</div>

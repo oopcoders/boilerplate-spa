@@ -25,7 +25,11 @@ export const routes: Routes = [
                 runGuardsAndResolvers: 'always',
                 loadComponent: () => import('./users/users-single/users-single').then(c => c.UsersSingle),
                 data: { breadcrumb: 'User Profile Manager' }
-            }
+            },
+            {
+                path: 'auth',
+                loadChildren: () => import('./auth/auth.routes').then(p => p.routes)
+            },
         ]
     }
 ];

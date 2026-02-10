@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { selectIsLoggedIn } from '../../../store';
+import { ApiActions, selectIsLoggedIn } from '../../../store';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
@@ -18,5 +18,9 @@ export class Navigation {
   private readonly store = inject(Store);
 
   readonly isLoggedIn$ = this.store.select(selectIsLoggedIn);
+
+  logout(): void {
+    this.store.dispatch(ApiActions.logout())
+  }
 
 }

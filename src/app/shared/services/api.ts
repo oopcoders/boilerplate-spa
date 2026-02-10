@@ -12,11 +12,11 @@ export class Api {
   private readonly baseUrl = 'https://localhost:5001/api';
 
   login(payload: ApiLoginPayload) {
-    return this.http.post<ApiLoginUser>(`${this.baseUrl}/account/login`, payload);
+    return this.http.post<ApiLoginUser>(`${this.baseUrl}/auth/login`, payload);
   }
 
   register(payload: ApiRegisterPayload) {
-    return this.http.post<ApiAuthResponse>(`${this.baseUrl}/account/register`, payload);
+    return this.http.post<ApiAuthResponse>(`${this.baseUrl}/auth/register`, payload);
   }
 
   users() {

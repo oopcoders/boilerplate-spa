@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DialogRegister } from './dialog-register';
-import {MatDialogRef} from '@angular/material/dialog';
-import {provideMockStore} from '@ngrx/store/testing';
+import { MatDialogRef } from '@angular/material/dialog';
+import { provideMockStore } from '@ngrx/store/testing';
 
 import {
   selectApiRegisterError,
   selectApiRegisterLoading,
   selectApiRegisterUser,
-} from '../../../store';
+} from '../../../../store';
 
 describe('DialogRegister', () => {
   let component: DialogRegister;
@@ -18,9 +18,9 @@ describe('DialogRegister', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [DialogRegister],
-       providers: [
-         { provide: MatDialogRef, useValue: dialogRef },
-          provideMockStore({
+      providers: [
+        { provide: MatDialogRef, useValue: dialogRef },
+        provideMockStore({
           selectors: [
             { selector: selectApiRegisterError, value: null },
             { selector: selectApiRegisterLoading, value: false },
@@ -29,7 +29,7 @@ describe('DialogRegister', () => {
         }),
       ],
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(DialogRegister);
     component = fixture.componentInstance;

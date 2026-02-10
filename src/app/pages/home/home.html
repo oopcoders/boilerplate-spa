@@ -1,1 +1,47 @@
-<h2>{{title()}}</h2>
+<div class="container">
+    <mat-card class="hero">
+        <mat-card-header>
+            <mat-card-title>{{ title() }}</mat-card-title>
+            <mat-card-subtitle>A clean starting point for your next Angular + Material app.</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+            <p class="lead">
+                This project is intentionally minimal, but includes the core pieces you’ll typically add to every app:
+                navigation, theming-friendly UI components, and authentication scaffolding.
+            </p>
+
+            <mat-divider></mat-divider>
+
+            <div class="cta">
+                <a mat-flat-button color="primary" routerLink="/users">
+                    <mat-icon aria-hidden="true">group</mat-icon>
+                    Users demo
+                </a>
+
+                <a mat-button routerLink="/reset-password">
+                    <mat-icon aria-hidden="true">lock_reset</mat-icon>
+                    Reset password
+                </a>
+            </div>
+
+            <div class="hint">
+                Tip: Use the toolbar icons to open Login/Register.
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <div class="grid">
+        @for (f of features(); track f.title) {
+        <mat-card class="feature">
+            <mat-card-header>
+                <mat-icon class="feature-icon" aria-hidden="true">{{ f.icon }}</mat-icon>
+                <mat-card-title>{{ f.title }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p>{{ f.desc }}</p>
+            </mat-card-content>
+        </mat-card>
+        }
+    </div>
+</div>

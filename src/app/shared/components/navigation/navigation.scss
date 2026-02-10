@@ -1,0 +1,14 @@
+.sidenav-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+mat-nav-list {
+    padding-top: 0;
+}
+
+/* Push auth section to the bottom */
+.authentication {
+    margin-top: auto;
+}

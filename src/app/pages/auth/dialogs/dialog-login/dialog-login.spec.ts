@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogLogin } from './dialog-login';
-import {MockStore, provideMockStore} from '@ngrx/store/testing';
-import {selectApiLoginError, selectApiLoginLoading, selectIsLoggedIn} from '../../../store';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { selectApiLoginError, selectApiLoginLoading, selectIsLoggedIn } from '../../../../store';
 
 describe('DialogLogin', () => {
   let component: DialogLogin;
@@ -14,13 +14,13 @@ describe('DialogLogin', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [DialogLogin],
-       providers: [
-         { provide: MatDialogRef, useValue: dialogRef },
+      providers: [
+        { provide: MatDialogRef, useValue: dialogRef },
         { provide: MAT_DIALOG_DATA, useValue: { name: 'Test', bio: 'Test bio' } },
-         provideMockStore(),
+        provideMockStore(),
       ],
     })
-    .compileComponents();
+      .compileComponents();
 
     store = TestBed.inject(MockStore);
 
@@ -33,7 +33,7 @@ describe('DialogLogin', () => {
     component = fixture.componentInstance;
 
     dialogRef.close.mockClear();
-      // runs ngOnInit + template bindings + async pipe subscriptions
+    // runs ngOnInit + template bindings + async pipe subscriptions
     fixture.detectChanges();
 
     // stash for test
