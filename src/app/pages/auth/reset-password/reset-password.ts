@@ -14,15 +14,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { passwordsMatchValidator } from '../../../shared/validators/passwords-match-validator';
 
 type Mode = 'request' | 'reset';
-
-function passwordsMatchValidator(group: AbstractControl): ValidationErrors | null {
-  const password = group.get('password')?.value ?? '';
-  const confirmPassword = group.get('confirmPassword')?.value ?? '';
-  if (!password || !confirmPassword) return null;
-  return password === confirmPassword ? null : { passwordsMismatch: true };
-}
 
 @Component({
   selector: 'app-reset-password',
@@ -78,7 +72,7 @@ export class ResetPassword {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]],
     },
-    { validators: passwordsMatchValidator }
+    { validators: passwordsMatchValidator('password', 'confirmPassword') }
   );
 
   constructor() {

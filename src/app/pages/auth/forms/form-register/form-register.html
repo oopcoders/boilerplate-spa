@@ -1,18 +1,48 @@
 <form [formGroup]="form" (ngSubmit)="register()">
     <mat-dialog-content class="form-grid">
+
+        <!-- Display Name -->
         <mat-form-field class="full-width" appearance="fill">
             <mat-label>Display Name</mat-label>
             <input matInput type="text" formControlName="displayName">
+            @if (form.controls.displayName.touched && form.controls.displayName.invalid) {
+            <mat-error>Display name is required</mat-error>
+            }
         </mat-form-field>
 
+        <!-- Email -->
         <mat-form-field class="full-width" appearance="fill">
             <mat-label>Email</mat-label>
             <input matInput type="email" formControlName="email">
+            @if (form.controls.email.touched && form.controls.email.invalid) {
+            <mat-error>Valid email is required</mat-error>
+            }
         </mat-form-field>
 
+        <!-- Password -->
         <mat-form-field class="full-width" appearance="fill">
             <mat-label>Password</mat-label>
-            <input matInput type="password" formControlName="password" autocomplete>
+            <input matInput type="password" formControlName="password" autocomplete="new-password">
+            @if (form.controls.password.touched && form.controls.password.invalid) {
+            <mat-error>
+                Password must be at least 6 characters
+            </mat-error>
+            }
+        </mat-form-field>
+
+        <!-- Confirm Password -->
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput type="password" formControlName="confirmPassword" autocomplete="new-password">
+
+            @if (form.controls.confirmPassword.touched && form.controls.confirmPassword.invalid) {
+            <mat-error>Confirm password is required</mat-error>
+            }
+
+            @if (form.hasError('passwordsMismatch')) {
+            <mat-error>Passwords do not match</mat-error>
+            }
+
         </mat-form-field>
 
         @if (error$ | async; as apiError) {
@@ -37,4 +67,13 @@
         <button mat-button (click)="completed.emit()">Cancel</button>
         <button type="submit" mat-button>Create Account</button>
     </mat-dialog-actions>
+
+
+
+    <pre>
+    errors: {{ form.errors | json }}
+    touched: {{ form.controls.confirmPassword.touched }}
+    dirty: {{ form.controls.confirmPassword.dirty }}
+    </pre>
+
 </form>
