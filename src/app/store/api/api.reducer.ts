@@ -71,7 +71,7 @@ const reducerInternal = createReducer(
   on(ApiActions.forgotPassword, (state) => ({
     ...state,
     forgotPassword: {
-      loading: false,
+      loading: true,
       error: null,
       data: null,
     },
@@ -101,7 +101,7 @@ const reducerInternal = createReducer(
   on(ApiActions.resetPassword, (state) => ({
     ...state,
     resetPassword: {
-      loading: false,
+      loading: true,
       error: null,
       data: null,
     },
