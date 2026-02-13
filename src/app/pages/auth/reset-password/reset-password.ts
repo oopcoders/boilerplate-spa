@@ -15,6 +15,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { passwordsMatchValidator } from '../../../shared/validators/passwords-match-validator';
+import { Store } from '@ngrx/store';
+import { ApiActions } from '../../../store';
 
 type Mode = 'request' | 'reset';
 
@@ -40,11 +42,12 @@ type Mode = 'request' | 'reset';
 })
 export class ResetPassword {
   private readonly fb = inject(FormBuilder);
-  private readonly api = inject(Api);
+  // private readonly api = inject(Api);
   private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
-  private readonly snackBar = inject(MatSnackBar);
+  //private readonly router = inject(Router);
+  // private readonly snackBar = inject(MatSnackBar);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly store = inject(Store);
 
   readonly loading = signal(false);
   readonly showPassword = signal(false);
@@ -110,7 +113,7 @@ export class ResetPassword {
 
     this.loading.set(true);
 
-    //dispatch action
+    this.store.dispatch(ApiActions.forgotPassword({ payload: { email } }))
   }
 
   submitReset(): void {
@@ -129,7 +132,9 @@ export class ResetPassword {
     };
 
     this.loading.set(true);
-    //Dispatch action
+
+    this.store.dispatch(ApiActions.resetPassword({ payload }))
+
   }
 
   get requestEmailCtrl() {
