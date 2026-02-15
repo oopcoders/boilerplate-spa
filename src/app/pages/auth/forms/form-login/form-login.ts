@@ -3,23 +3,25 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable, of, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ApiActions, selectApiLoginError, selectApiLoginLoading, selectIsLoggedIn } from '../../../../store';
-import { MatDialogModule } from '@angular/material/dialog';
 import { AsyncPipe } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-form-login',
   imports: [
-    MatDialogModule,
     AsyncPipe,
     MatProgressSpinnerModule,
     MatInputModule,
     ReactiveFormsModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule,
+    RouterLink
   ],
   templateUrl: './form-login.html',
   styleUrl: './form-login.scss',

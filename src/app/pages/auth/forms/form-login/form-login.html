@@ -1,48 +1,56 @@
-<form [formGroup]="form" (ngSubmit)="login()">
-    <mat-dialog-content class="form-grid">
-        <mat-form-field class="full-width" appearance="fill">
-            <mat-label>Email</mat-label>
-            <input matInput type="email" formControlName="email" autocomplete="email">
-            @if (form.controls.email.touched && form.controls.email.invalid) {
-            <mat-error>Valid email is required</mat-error>
+<form [formGroup]="form" (ngSubmit)="login()" class="auth-page">
+    <mat-card class="auth-card">
+        <mat-card-header>
+            <mat-card-subtitle>Welcome back — enter your credentials.</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="form-grid">
+            <!-- Email -->
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email" autocomplete="username" />
+                @if (form.controls.email.touched && form.controls.email.invalid) {
+                <mat-error>Valid email is required</mat-error>
+                }
+            </mat-form-field>
+
+            <!-- Password -->
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Password</mat-label>
+                <input matInput [type]="showPassword() ? 'text' : 'password'" formControlName="password"
+                    autocomplete="current-password" />
+                <button mat-icon-button matSuffix type="button" (click)="togglePassword()"
+                    [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'">
+                    <mat-icon>{{ showPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+
+                @if (form.controls.password.touched && form.controls.password.invalid) {
+                <mat-error>Password is required</mat-error>
+                }
+            </mat-form-field>
+
+            @if (error$ | async; as apiError) {
+            <div class="error-message">{{ apiError }}</div>
             }
-        </mat-form-field>
 
-        <mat-form-field class="full-width" appearance="fill">
-            <mat-label>Password</mat-label>
-            <input matInput [type]="showPassword() ? 'text' : 'password'" formControlName="password"
-                autocomplete="current-password" />
-            <button mat-icon-button matSuffix type="button" (click)="togglePassword()"
-                [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'">
-                <mat-icon>{{ showPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </button>
-            @if (form.controls.password.touched && form.controls.password.invalid) {
-            <mat-error>
-                Password is required
-            </mat-error>
+            @if (loading$ | async) {
+            <div class="form-spinner">
+                <mat-spinner diameter="28"></mat-spinner>
+            </div>
             }
-        </mat-form-field>
 
-        @if (error$ | async; as apiError) {
-        <div class="error-message">
-            {{ apiError }}
-        </div>
-        }
+            @if (isLoggedIn$ | async) {
+            <div class="hint">Logged in!</div>
+            }
+        </mat-card-content>
 
-        @if (loading$ | async; as loading) {
-        <div class="form-spinner">
-            <mat-spinner></mat-spinner>
-        </div>
-        }
+        <mat-card-actions align="end">
+            <button type="button" mat-button (click)="completed.emit()">Cancel</button>
+            <button type="submit" mat-flat-button [disabled]="form.invalid">Login</button>
+        </mat-card-actions>
 
-        @if (isLoggedIn$ | async) {
-        <div class="hint">Logged in!</div>
-        }
-
-
-    </mat-dialog-content>
-    <mat-dialog-actions>
-        <button mat-button (click)="completed.emit()">Cancel</button>
-        <button type="submit" mat-button>Login</button>
-    </mat-dialog-actions>
+        <mat-card-actions align="end">
+            <a mat-button routerLink="/auth/reset-password">Forgot password?</a>
+        </mat-card-actions>
+    </mat-card>
 </form>

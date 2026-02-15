@@ -11,11 +11,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { passwordsMatchValidator } from '../../../../shared/validators/passwords-match-validator';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-form-register',
-  imports: [MatDialogModule, AsyncPipe, ReactiveFormsModule, MatInputModule,
-    MatFormFieldModule, MatButtonModule, MatProgressSpinnerModule, MatIconModule],
+  imports: [RouterLink, MatDialogModule, AsyncPipe, ReactiveFormsModule, MatInputModule,
+    MatFormFieldModule, MatButtonModule, MatProgressSpinnerModule, MatIconModule, MatCardModule],
   templateUrl: './form-register.html',
   styleUrl: './form-register.scss',
 })

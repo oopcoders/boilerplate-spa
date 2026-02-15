@@ -35,14 +35,14 @@ export class Pages implements OnInit {
 
   openRegisterDialog(): void {
     this.registerDialog.open(DialogRegister, {
-      height: '550px',
+      height: '650px',
       width: '500px',
     });
   }
 
   openLoginDialog(): void {
     this.loginDialog.open(DialogLogin, {
-      height: '400px',
+      height: '450px',
       width: '400px',
     });
   }
