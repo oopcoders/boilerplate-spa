@@ -35,8 +35,8 @@ export class Pages implements OnInit {
 
   openRegisterDialog(): void {
     this.registerDialog.open(DialogRegister, {
-      height: '450px',
-      width: '400px',
+      height: '550px',
+      width: '500px',
     });
   }
 

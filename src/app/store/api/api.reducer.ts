@@ -127,7 +127,7 @@ const reducerInternal = createReducer(
     },
   })),
 
-
+  // ---- LOGOUT USER ----
   on(ApiActions.logout, (state) => ({
     ...state,
     register: {

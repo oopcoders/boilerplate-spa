@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { ApiActions, ApiAuthResponse, selectApiRegisterError, selectApiRegisterLoading, selectApiRegisterUser } from '../../../../store';
 import { Store } from '@ngrx/store';
 import { MatDialogModule } from '@angular/material/dialog';
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -14,7 +14,7 @@ import { passwordsMatchValidator } from '../../../../shared/validators/passwords
 @Component({
   selector: 'app-form-register',
   imports: [MatDialogModule, AsyncPipe, ReactiveFormsModule, MatInputModule,
-    MatFormFieldModule, MatButtonModule, MatProgressSpinnerModule, JsonPipe],
+    MatFormFieldModule, MatButtonModule, MatProgressSpinnerModule],
   templateUrl: './form-register.html',
   styleUrl: './form-register.scss',
 })
