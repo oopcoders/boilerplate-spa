@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Output, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable, of, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -8,6 +8,7 @@ import { AsyncPipe } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-form-login',
@@ -18,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatInputModule,
     ReactiveFormsModule,
     MatButtonModule,
+    MatIconModule
   ],
   templateUrl: './form-login.html',
   styleUrl: './form-login.scss',
@@ -25,6 +27,7 @@ import { MatButtonModule } from '@angular/material/button';
 export class FormLogin {
   private readonly fb = inject(FormBuilder);
   private readonly store = inject(Store);
+  readonly showPassword = signal(false);
 
   @Output() completed = new EventEmitter<void>();
 
@@ -56,5 +59,9 @@ export class FormLogin {
 
     const raw = this.form.getRawValue(); // strongly typed
     this.store.dispatch(ApiActions.login({ payload: raw }));
+  }
+
+  togglePassword(): void {
+    this.showPassword.set(!this.showPassword());
   }
 }

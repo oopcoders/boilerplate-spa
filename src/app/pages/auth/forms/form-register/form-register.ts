@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { ApiActions, ApiAuthResponse, selectApiRegisterError, selectApiRegisterLoading, selectApiRegisterUser } from '../../../../store';
@@ -10,19 +10,22 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { passwordsMatchValidator } from '../../../../shared/validators/passwords-match-validator';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-form-register',
   imports: [MatDialogModule, AsyncPipe, ReactiveFormsModule, MatInputModule,
-    MatFormFieldModule, MatButtonModule, MatProgressSpinnerModule],
+    MatFormFieldModule, MatButtonModule, MatProgressSpinnerModule, MatIconModule],
   templateUrl: './form-register.html',
   styleUrl: './form-register.scss',
 })
 export class FormRegister {
 
   private readonly fb = inject(FormBuilder);
-
   private store = inject(Store);
+
+  readonly showPassword = signal(false);
+  readonly showConfirmPassword = signal(false);
 
   error$: Observable<string | null> = of(null);
   loading$: Observable<boolean> = of(false);
@@ -66,5 +69,13 @@ export class FormRegister {
     );
 
     this.completed.emit();
+  }
+
+  togglePassword(): void {
+    this.showPassword.set(!this.showPassword());
+  }
+
+  toggleConfirmPassword(): void {
+    this.showConfirmPassword.set(!this.showConfirmPassword());
   }
 }

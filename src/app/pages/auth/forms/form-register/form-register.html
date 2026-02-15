@@ -22,7 +22,12 @@
         <!-- Password -->
         <mat-form-field class="full-width" appearance="fill">
             <mat-label>Password</mat-label>
-            <input matInput type="password" formControlName="password" autocomplete="new-password">
+            <input matInput [type]="showPassword() ? 'text' : 'password'" formControlName="password"
+                autocomplete="new-password" />
+            <button mat-icon-button matSuffix type="button" (click)="togglePassword()"
+                [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'">
+                <mat-icon>{{ showPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
             @if (form.controls.password.touched && form.controls.password.invalid) {
             <mat-error>
                 Password must be at least 6 characters
@@ -33,7 +38,12 @@
         <!-- Confirm Password -->
         <mat-form-field class="full-width" appearance="fill">
             <mat-label>Confirm Password</mat-label>
-            <input matInput type="password" formControlName="confirmPassword" autocomplete="new-password">
+            <input matInput [type]="showConfirmPassword() ? 'text' : 'password'" formControlName="confirmPassword"
+                autocomplete="new-password" />
+            <button mat-icon-button matSuffix type="button" (click)="toggleConfirmPassword()"
+                [attr.aria-label]="showConfirmPassword() ? 'Hide confirm password' : 'Show confirm password'">
+                <mat-icon>{{ showConfirmPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
 
             @if (form.controls.confirmPassword.touched && form.controls.confirmPassword.hasError('required')) {
             <mat-error>Confirm password is required</mat-error>
