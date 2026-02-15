@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-login',
@@ -20,8 +20,7 @@ import { RouterLink } from '@angular/router';
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
-    MatCardModule,
-    RouterLink
+    MatCardModule
   ],
   templateUrl: './form-login.html',
   styleUrl: './form-login.scss',
@@ -29,6 +28,7 @@ import { RouterLink } from '@angular/router';
 export class FormLogin {
   private readonly fb = inject(FormBuilder);
   private readonly store = inject(Store);
+  private readonly router = inject(Router);
   readonly showPassword = signal(false);
 
   @Output() completed = new EventEmitter<void>();
@@ -65,5 +65,10 @@ export class FormLogin {
 
   togglePassword(): void {
     this.showPassword.set(!this.showPassword());
+  }
+
+  goToPasswordReset(): void {
+    this.completed.emit();
+    this.router.navigateByUrl('/auth/reset-password');
   }
 }

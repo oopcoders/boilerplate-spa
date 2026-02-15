@@ -12,11 +12,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { passwordsMatchValidator } from '../../../../shared/validators/passwords-match-validator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-register',
-  imports: [RouterLink, MatDialogModule, AsyncPipe, ReactiveFormsModule, MatInputModule,
+  imports: [MatDialogModule, AsyncPipe, ReactiveFormsModule, MatInputModule,
     MatFormFieldModule, MatButtonModule, MatProgressSpinnerModule, MatIconModule, MatCardModule],
   templateUrl: './form-register.html',
   styleUrl: './form-register.scss',
@@ -24,6 +24,7 @@ import { RouterLink } from '@angular/router';
 export class FormRegister {
 
   private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
   private store = inject(Store);
 
   readonly showPassword = signal(false);
@@ -80,4 +81,10 @@ export class FormRegister {
   toggleConfirmPassword(): void {
     this.showConfirmPassword.set(!this.showConfirmPassword());
   }
+
+  goToLogin(): void {
+    this.completed.emit();
+    this.router.navigateByUrl('/auth/login');
+  }
+
 }
