@@ -12,7 +12,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 // Angular Material
@@ -67,6 +67,8 @@ export class ResetPassword {
   private readonly destroyRef = inject(DestroyRef);
   private readonly store = inject(Store);
   private readonly snackBar = inject(MatSnackBar);
+  private readonly router = inject(Router);
+
 
   readonly showPassword = signal(false);
   readonly showConfirmPassword = signal(false);
@@ -200,8 +202,7 @@ export class ResetPassword {
           { duration: 5000 }
         );
 
-        // Optional: redirect to login
-        // inject(Router).navigateByUrl('/login');
+        this.router.navigateByUrl('/auth/login');
       }
     });
   }

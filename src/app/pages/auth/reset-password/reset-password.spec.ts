@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/router';
+import { ActivatedRoute, convertToParamMap, provideRouter, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { provideMockStore } from '@ngrx/store/testing';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 import { ResetPassword } from './reset-password';
 import {
@@ -15,9 +15,10 @@ import {
 } from '../../../store/api/api.selectors';
 
 describe('ResetPassword', () => {
-  let component: ResetPassword;
   let fixture: ComponentFixture<ResetPassword>;
+  let store: MockStore<any>;
 
+  const LOGIN_URL = '/auth/login';
   const snackBarMock = jasmine.createSpyObj<MatSnackBar>('MatSnackBar', ['open']);
 
   beforeEach(async () => {
@@ -26,15 +27,18 @@ describe('ResetPassword', () => {
       providers: [
         provideRouter([]),
 
-        // ✅ ActivatedRoute with query params (no email/token => request mode)
         {
           provide: ActivatedRoute,
           useValue: {
-            queryParamMap: of(convertToParamMap({})),
+            queryParamMap: of(
+              convertToParamMap({
+                email: 'test@test.com',
+                token: 'TOKEN',
+              })
+            ),
           },
         },
 
-        // ✅ Store selectors used by selectSignal(...)
         provideMockStore({
           selectors: [
             { selector: selectApiForgotPasswordLoading, value: false },
@@ -47,17 +51,53 @@ describe('ResetPassword', () => {
           ],
         }),
 
-        // ✅ Snack bar
         { provide: MatSnackBar, useValue: snackBarMock },
       ],
     }).compileComponents();
 
+    store = TestBed.inject(MockStore) as MockStore<any>;
+
     fixture = TestBed.createComponent(ResetPassword);
-    component = fixture.componentInstance;
-    fixture.detectChanges(); // ✅ runs constructor subscriptions + effects
+    fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(fixture.componentInstance).toBeTruthy();
+  });
+
+  function applyStoreUpdate(): void {
+    store.refreshState();
+    fixture.detectChanges();
+  }
+
+  describe('When reset password succeeds', () => {
+    let router: Router;
+
+    let loadingSel: any;
+    let errorSel: any;
+    let dataSel: any;
+
+    beforeEach(() => {
+      router = TestBed.inject(Router);
+      spyOn(router, 'navigateByUrl');
+
+      loadingSel = store.overrideSelector(selectApiResetPasswordLoading, false);
+      errorSel = store.overrideSelector(selectApiResetPasswordError, null);
+      dataSel = store.overrideSelector(selectApiResetPasswordData, null);
+
+      // started
+      loadingSel.setResult(true);
+      applyStoreUpdate();
+
+      // finished successfully
+      dataSel.setResult({ ok: true } as any);
+      errorSel.setResult(null);
+      loadingSel.setResult(false);
+      applyStoreUpdate();
+    });
+
+    it(`should redirect to ${LOGIN_URL}`, () => {
+      expect(router.navigateByUrl).toHaveBeenCalledWith(LOGIN_URL);
+    });
   });
 });
