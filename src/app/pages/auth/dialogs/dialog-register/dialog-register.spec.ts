@@ -13,13 +13,13 @@ import {
 describe('DialogRegister', () => {
   let component: DialogRegister;
   let fixture: ComponentFixture<DialogRegister>;
-  const dialogRef = { close: vi.fn() };
+  const dialogMock = jasmine.createSpyObj('MatDialog', ['close']);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [DialogRegister],
       providers: [
-        { provide: MatDialogRef, useValue: dialogRef },
+        { provide: MatDialogRef, useValue: dialogMock },
         provideMockStore({
           selectors: [
             { selector: selectApiRegisterError, value: null },

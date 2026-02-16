@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 
 import { Settings } from './settings';
+import { selectApiLoginUser } from '../../../store';
 
 describe('Settings', () => {
   let component: Settings;
@@ -8,13 +10,19 @@ describe('Settings', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Settings]
-    })
-    .compileComponents();
+      imports: [Settings],
+      providers: [
+        provideMockStore({
+          selectors: [
+            { selector: selectApiLoginUser, value: null },
+          ],
+        }),
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(Settings);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
   it('should create', () => {

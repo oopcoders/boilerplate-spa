@@ -1,7 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/router';
+import { provideMockStore } from '@ngrx/store/testing';
 
 import { UsersSingle } from './users-single';
-import { provideMockStore } from '@ngrx/store/testing';
+import {
+  selectApiUserLoading,
+  selectApiUserError,
+  selectApiUserData,
+} from '../../../store/api/api.selectors';
 
 describe('UsersSingle', () => {
   let component: UsersSingle;
@@ -11,14 +17,32 @@ describe('UsersSingle', () => {
     await TestBed.configureTestingModule({
       imports: [UsersSingle],
       providers: [
-        provideMockStore(), // ✅ provides Store
+        provideRouter([]),
+
+        // ✅ ActivatedRoute stub with snapshot.paramMap.get('id') support
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              paramMap: convertToParamMap({ id: '123' }),
+            },
+          },
+        },
+
+        // ✅ Store + selector values (important for selectSignal)
+        provideMockStore({
+          selectors: [
+            { selector: selectApiUserData, value: null },
+            { selector: selectApiUserLoading, value: false },
+            { selector: selectApiUserError, value: null },
+          ],
+        }),
       ],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UsersSingle);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges(); // triggers ngOnInit
   });
 
   it('should create', () => {
