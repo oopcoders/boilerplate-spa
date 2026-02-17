@@ -88,7 +88,7 @@ export class ApiEffects {
       this.actions$.pipe(
         ofType(ApiActions.loginSuccess),
         tap(({ response }) => {
-          localStorage.setItem('token', response.token);
+          localStorage.setItem('accessToken', response.accessToken);
         })
       ),
     { dispatch: false }

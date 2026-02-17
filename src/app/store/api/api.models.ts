@@ -15,10 +15,8 @@ export interface ApiLoginPayload {
 }
 
 export interface ApiLoginUser {
-  id: string;
-  email: string;
-  displayName: string;
-  token: string;
+  accessToken: string;
+  refreshToken: string;
 }
 
 export interface ApiAuthResponse {
