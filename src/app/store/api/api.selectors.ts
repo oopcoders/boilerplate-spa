@@ -8,11 +8,16 @@ export const selectApiLogin = createSelector(selectApi, (s) => s.login);
 
 export const selectApiLoginLoading = createSelector(selectApiLogin, (r) => r.loading);
 export const selectApiLoginError = createSelector(selectApiLogin, (r) => r.error);
-export const selectApiLoginUser = createSelector(selectApiLogin, (u) => u.data);
+export const selectApiLoginResponse = createSelector(selectApiLogin, (r) => r.data);
+
+export const selectLoggedInUser = createSelector(
+  selectApiLoginResponse,
+  (login) => login?.user ?? null
+);
 
 export const selectIsLoggedIn = createSelector(
-  selectApiLoginUser,
-  (user) => !!user
+  selectApiLoginResponse,
+  (login) => !!login?.accessToken
 );
 
 export const selectApiRegister = createSelector(selectApi, (s) => s.register);
@@ -20,18 +25,6 @@ export const selectApiRegister = createSelector(selectApi, (s) => s.register);
 export const selectApiRegisterLoading = createSelector(selectApiRegister, (r) => r.loading);
 export const selectApiRegisterError = createSelector(selectApiRegister, (r) => r.error);
 export const selectApiRegisterUser = createSelector(selectApiRegister, (u) => u.data);
-
-export const selectApiUsers = createSelector(selectApi, (s) => s.users);
-
-export const selectApUsersLoading = createSelector(selectApiUsers, (r) => r.loading);
-export const selectApiUsersError = createSelector(selectApiUsers, (r) => r.error);
-export const selectApiUsersData = createSelector(selectApiUsers, (u) => u.data);
-
-export const selectApiUser = createSelector(selectApi, (s) => s.user);
-
-export const selectApiUserLoading = createSelector(selectApiUser, (r) => r.loading);
-export const selectApiUserError = createSelector(selectApiUser, (r) => r.error);
-export const selectApiUserData = createSelector(selectApiUser, (u) => u.data);
 
 export const selectApiForgotPassword = createSelector(selectApi, (s) => s.forgotPassword);
 

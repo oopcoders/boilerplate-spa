@@ -1,16 +1,58 @@
 @if (user()) {
-<mat-card class="example-card" appearance="outlined">
+<mat-card class="settings-card" appearance="outlined">
     <mat-card-header>
-        @if (user()!.displayName) {
-        <mat-card-title>{{ user()!.displayName }}</mat-card-title>
-        }
-        @if (user()!.email) {
-        <mat-card-subtitle>{{ user()!.email }}</mat-card-subtitle>
-        }
-    </mat-card-header>
-</mat-card>
+        <div mat-card-avatar class="avatar">
+            {{ user()!.username[0].toUpperCase() }}
+        </div>
 
-<p><button matButton (click)="logout()">Logout</button></p>
+        <mat-card-title>Account</mat-card-title>
+        <mat-card-subtitle>Signed in</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+        <mat-list class="details">
+            <mat-list-item>
+                <mat-icon matListItemIcon>person</mat-icon>
+                <div matListItemTitle>Username</div>
+                <div matListItemLine class="value">{{ user()!.username }}</div>
+            </mat-list-item>
+
+            <mat-divider></mat-divider>
+
+            <mat-list-item>
+                <mat-icon matListItemIcon>mail</mat-icon>
+                <div matListItemTitle>Email</div>
+                <div matListItemLine class="value">{{ user()!.email }}</div>
+            </mat-list-item>
+
+            @if (user()!.roles.length) {
+            <mat-divider></mat-divider>
+
+            <mat-list-item>
+                <mat-icon matListItemIcon>shield</mat-icon>
+                <div matListItemTitle>Roles</div>
+                <div matListItemLine class="value">{{ user()!.roles.join(', ') }}</div>
+            </mat-list-item>
+            }
+        </mat-list>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+        <button mat-stroked-button color="warn" (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            Logout
+        </button>
+    </mat-card-actions>
+</mat-card>
 } @else {
-<p>You are logged out</p>
+<mat-card class="settings-card" appearance="outlined">
+    <mat-card-header>
+        <mat-card-title>Account</mat-card-title>
+        <mat-card-subtitle>Signed out</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+        <p class="logged-out-text">You are logged out.</p>
+    </mat-card-content>
+</mat-card>
 }

@@ -141,65 +141,7 @@ const reducerInternal = createReducer(
       error: null,
       data: null,
     },
-  })),
-
-  // ---- LOAD USERS SUCCESS ----
-  on(ApiActions.loadUsers, (state) => ({
-    ...state,
-    users: {
-      loading: true,
-      error: null,
-      data: null,
-    },
-  })),
-
-  on(ApiActions.loadUsersSuccess, (state, { response }) => ({
-    ...state,
-    users: {
-      loading: false,
-      error: null,
-      data: response,
-    },
-  })),
-
-  // ---- LOAD USERS FAILURE ----
-  on(ApiActions.loadUsersFailure, (state, { error }) => ({
-    ...state,
-    users: {
-      loading: false,
-      error,
-      data: null,
-    },
-  })),
-
-  on(ApiActions.loadUser, (state) => ({
-    ...state,
-    users: {
-      loading: true,
-      error: null,
-      data: null,
-    },
-  })),
-
-  // ---- LOAD USER BY  SUCCESS ----
-  on(ApiActions.loadUserSuccess, (state, { response }) => ({
-    ...state,
-    user: {
-      loading: false,
-      error: null,
-      data: response,
-    },
-  })),
-
-  // ---- LOAD USERS FAILURE ----
-  on(ApiActions.loadUserFailure, (state, { error }) => ({
-    ...state,
-    user: {
-      loading: false,
-      error,
-      data: null,
-    },
-  })),
+  }))
 );
 
 export function apiReducer(state: ApiFeatureState | undefined, action: Action): ApiFeatureState {

@@ -82,29 +82,30 @@ export class ApiEffects {
     ),
   );
 
-  // ✅ Persist token on successful login
   persistToken$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(ApiActions.loginSuccess),
         tap(({ response }) => {
           localStorage.setItem('accessToken', response.accessToken);
+          localStorage.setItem('refreshToken', response.refreshToken); // optional but typical
         })
       ),
     { dispatch: false }
   );
 
-  // ✅ Logout = side effect only
   logout$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(ApiActions.logout, ApiActions.loginFailure),
         tap(() => {
-          localStorage.removeItem('token');
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
         })
       ),
     { dispatch: false }
   );
+
 
   logoutRecheckRoute$ = createEffect(
     () =>
@@ -181,34 +182,5 @@ export class ApiEffects {
         })
       ),
     { dispatch: false }
-  );
-
-
-
-
-  // USERS
-
-  loadUsers$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(ApiActions.loadUsers),
-      switchMap(() =>
-        this.api.users().pipe(
-          map((response) => ApiActions.loadUsersSuccess({ response })),
-          catchError((err) => of(ApiActions.loadUsersFailure({ error: toErrorMessage(err) }))),
-        ),
-      ),
-    ),
-  );
-
-  loadUser$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(ApiActions.loadUser),
-      switchMap((action) =>
-        this.api.userById(action.payload).pipe(
-          map((response) => ApiActions.loadUserSuccess({ response })),
-          catchError((err) => of(ApiActions.loadUserFailure({ error: toErrorMessage(err) }))),
-        ),
-      ),
-    ),
   );
 }

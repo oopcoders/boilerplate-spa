@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { ApiLoginPayload, ApiAuthResponse, ApiRegisterPayload, ApiUserResponse, ApiLoginUser, ApiResetPasswordPayload, ApiResetPasswordResponse, ApiForgotPasswordPayload, ApiForgotPasswordResponse } from './api.models';
+import { ApiLoginPayload, ApiAuthResponse, ApiRegisterPayload, ApiLoginUser, ApiResetPasswordPayload, ApiResetPasswordResponse, ApiForgotPasswordPayload, ApiForgotPasswordResponse } from './api.models';
 
 export const ApiActions = createActionGroup({
   source: 'Api',
@@ -11,13 +11,6 @@ export const ApiActions = createActionGroup({
     'Register Success': props<{ response: ApiAuthResponse }>(),
     'Register Failure': props<{ error: string }>(),
     'Logout': emptyProps,
-
-    'Load Users': emptyProps,
-    'Load Users Success': props<{ response: ApiUserResponse[] }>(),
-    'Load Users Failure': props<{ error: string }>(),
-    'Load User': props<{ payload: string }>(),
-    'Load User Success': props<{ response: ApiUserResponse }>(),
-    'Load User Failure': props<{ error: string }>(),
 
     'Reset Password': props<{ payload: ApiResetPasswordPayload }>(),
     'Reset Password Success': props<{ response: ApiResetPasswordResponse }>(),

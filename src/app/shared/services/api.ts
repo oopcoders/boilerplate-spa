@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ApiLoginPayload, ApiAuthResponse, ApiRegisterPayload, ApiUserResponse, ApiLoginUser, ApiForgotPasswordPayload, ApiForgotPasswordResponse, ApiResetPasswordPayload, ApiResetPasswordResponse } from '../../store';
+import { ApiLoginPayload, ApiAuthResponse, ApiRegisterPayload, ApiLoginUser, ApiForgotPasswordPayload, ApiForgotPasswordResponse, ApiResetPasswordPayload, ApiResetPasswordResponse } from '../../store';
 
 
 
@@ -25,14 +25,6 @@ export class Api {
 
   resetPassword(payload: ApiResetPasswordPayload) {
     return this.http.post<ApiResetPasswordResponse>(`${this.baseUrl}/auth/reset-password`, payload);
-  }
-
-  users() {
-    return this.http.get<ApiUserResponse[]>(`${this.baseUrl}/users`);
-  }
-
-  userById(payload: string) {
-    return this.http.get<ApiUserResponse>(`${this.baseUrl}/users/${payload}`);
   }
 
 }
