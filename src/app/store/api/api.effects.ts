@@ -5,6 +5,7 @@ import { ApiActions } from './api.actions';
 import { Api } from '../../shared/services/api';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TokenService } from '../../shared/services/token.service';
 
 function toErrorMessage(err: unknown): string {
   if (!err) return 'Login failed.';
@@ -31,6 +32,7 @@ function toErrorMessage(err: unknown): string {
 export class ApiEffects {
   private actions$ = inject(Actions);
   private api = inject(Api);
+  private readonly tokenService = inject(TokenService);
   private readonly router = inject(Router);
   private readonly snackBar = inject(MatSnackBar);
 
@@ -85,25 +87,23 @@ export class ApiEffects {
   persistToken$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ApiActions.loginSuccess),
-        tap(({ response }) => {
-          localStorage.setItem('accessToken', response.accessToken);
-          localStorage.setItem('refreshToken', response.refreshToken); // optional but typical
-        })
+        ofType(ApiActions.loginSuccess, ApiActions.sessionRestored),
+        tap(({ response, session }: any) => {
+          const accessToken = response?.accessToken ?? session?.accessToken;
+          const refreshToken = response?.refreshToken ?? session?.refreshToken;
+          if (accessToken) this.tokenService.setTokens({ accessToken, refreshToken });
+        }),
       ),
-    { dispatch: false }
+    { dispatch: false },
   );
 
   logout$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ApiActions.logout, ApiActions.loginFailure),
-        tap(() => {
-          localStorage.removeItem('accessToken');
-          localStorage.removeItem('refreshToken');
-        })
+        ofType(ApiActions.logout, ApiActions.loginFailure, ApiActions.sessionCleared),
+        tap(() => this.tokenService.clear()),
       ),
-    { dispatch: false }
+    { dispatch: false },
   );
 
 

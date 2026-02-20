@@ -141,7 +141,37 @@ const reducerInternal = createReducer(
       error: null,
       data: null,
     },
-  }))
+  })),
+
+  on(ApiActions.sessionRestored, (state, { session }) => ({
+    ...state,
+    login: {
+      loading: false,
+      error: null,
+      data: session,
+    },
+  })),
+
+  on(ApiActions.sessionTokensUpdated, (state, { accessToken, refreshToken }) => {
+    if (!state.login.data) return state;
+    return {
+      ...state,
+      login: {
+        ...state.login,
+        data: {
+          ...state.login.data,
+          accessToken,
+          refreshToken: refreshToken ?? state.login.data.refreshToken,
+        },
+      },
+    };
+  }),
+
+  on(ApiActions.sessionCleared, (state) => ({
+    ...state,
+    login: { loading: false, error: null, data: null },
+  })),
+
 );
 
 export function apiReducer(state: ApiFeatureState | undefined, action: Action): ApiFeatureState {

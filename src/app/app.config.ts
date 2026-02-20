@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig, inject, provideAppInitializer, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter, withRouterConfig, withViewTransitions } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -11,9 +11,11 @@ import { AppEffects } from './store/app/app.effects';
 import { ApiEffects } from './store/api/api.effects';
 import { API_FEATURE_KEY, apiReducer, APP_FEATURE_KEY, appReducer } from './store';
 import { authInterceptor } from './shared/services/api.interceptor';
+import { AuthBootstrapService } from './shared/services/auth-bootstrap.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideAppInitializer(() => inject(AuthBootstrapService).init()),
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes, withViewTransitions(), withRouterConfig({
       onSameUrlNavigation: 'reload',

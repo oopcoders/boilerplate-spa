@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { ApiLoginPayload, ApiAuthResponse, ApiRegisterPayload, ApiLoginUser, ApiForgotPasswordPayload, ApiForgotPasswordResponse, ApiResetPasswordPayload, ApiResetPasswordResponse } from '../../store';
+import { SKIP_AUTH } from './http-context.tokens';
 
 
 
@@ -12,7 +13,9 @@ export class Api {
   private readonly baseUrl = 'https://localhost:5001/api';
 
   login(payload: ApiLoginPayload) {
-    return this.http.post<ApiLoginUser>(`${this.baseUrl}/auth/login`, payload);
+    return this.http.post<ApiLoginUser>(`${this.baseUrl}/auth/login`, payload, {
+      context: new HttpContext().set(SKIP_AUTH, true),
+    });
   }
 
   register(payload: ApiRegisterPayload) {

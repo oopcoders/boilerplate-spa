@@ -18,5 +18,11 @@ export const ApiActions = createActionGroup({
     'Forgot Password': props<{ payload: ApiForgotPasswordPayload }>(),
     'Forgot Password Success': props<{ response: ApiForgotPasswordResponse }>(),
     'Forgot Password Failure': props<{ error: string }>(),
+
+    // Add near existing events
+    'Session Restored': props<{ session: ApiLoginUser }>(),
+    'Session Tokens Updated': props<{ accessToken: string; refreshToken: string | null }>(),
+    'Session Cleared': emptyProps(),
+
   },
 });

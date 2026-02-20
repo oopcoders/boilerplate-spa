@@ -1,21 +1,22 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { map, take } from 'rxjs';
-import { selectIsLoggedIn } from '../../store';
+import { combineLatest, map, take, filter } from 'rxjs';
+import { selectAppIsReady, selectIsLoggedIn } from '../../store';
 
 export const authGuard: CanActivateFn = () => {
   const store = inject(Store);
   const router = inject(Router);
 
-  return store.select(selectIsLoggedIn).pipe(
+  return combineLatest([store.select(selectAppIsReady), store.select(selectIsLoggedIn)]).pipe(
+    filter(([ready]) => !!ready),
     take(1),
-    map(isLoggedIn => {
+    map(([, isLoggedIn]) => {
       if (!isLoggedIn) {
-        router.navigate(['/']); // or '/'
+        router.navigate(['/']);
         return false;
       }
       return true;
-    })
+    }),
   );
 };
