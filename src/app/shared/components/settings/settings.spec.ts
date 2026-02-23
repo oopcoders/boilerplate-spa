@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 
 import { Settings } from './settings';
-import { selectApiLoginUser } from '../../../store';
+import { selectLoggedInUser } from '../../../store';
 
 describe('Settings', () => {
   let component: Settings;
@@ -14,7 +14,7 @@ describe('Settings', () => {
       providers: [
         provideMockStore({
           selectors: [
-            { selector: selectApiLoginUser, value: null },
+            { selector: selectLoggedInUser, value: null },
           ],
         }),
       ],

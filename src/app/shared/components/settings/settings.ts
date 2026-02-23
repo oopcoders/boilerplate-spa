@@ -33,12 +33,6 @@ export class Settings {
   loggedInUser = this.store.selectSignal(selectLoggedInUser);
   user = computed(() => this.loggedInUser());
 
-  constructor() {
-    effect(() => {
-      console.log('User updated:', this.user());
-    });
-  }
-
   logout(): void {
     this.store.dispatch(ApiActions.logout());
   }
