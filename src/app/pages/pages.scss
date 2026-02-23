@@ -3,10 +3,6 @@
 .container {
     height: 100vh;
 
-    mat-sidenav {
-        @include mat.sidenav-overrides((container-shape: 0px,
-                container-background-color: var(--mat-sys-surface)));
-    }
 }
 
 .spacer {

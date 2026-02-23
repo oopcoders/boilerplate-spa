@@ -1,10 +1,7 @@
 @if (user()) {
+<!-- ACCOUNT (SIGNED IN) -->
 <mat-card class="settings-card" appearance="outlined">
     <mat-card-header>
-        <div mat-card-avatar class="avatar">
-            {{ user()!.username[0].toUpperCase() }}
-        </div>
-
         <mat-card-title>Account</mat-card-title>
         <mat-card-subtitle>Signed in</mat-card-subtitle>
     </mat-card-header>
@@ -44,7 +41,9 @@
         </button>
     </mat-card-actions>
 </mat-card>
+
 } @else {
+<!-- ACCOUNT (SIGNED OUT) -->
 <mat-card class="settings-card" appearance="outlined">
     <mat-card-header>
         <mat-card-title>Account</mat-card-title>
@@ -56,3 +55,35 @@
     </mat-card-content>
 </mat-card>
 }
+
+<!-- APPEARANCE (SHOWS FOR BOTH SIGNED IN + SIGNED OUT) -->
+<mat-card class="settings-card" appearance="outlined">
+    <mat-card-header>
+        <mat-card-title>Appearance</mat-card-title>
+        <mat-card-subtitle>Theme &amp; mode</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content class="appearance-content">
+        <!-- Dark mode row -->
+        <div class="dark-mode-row">
+            <span>Dark mode</span>
+
+            <mat-slide-toggle [checked]="theme.isDark()" (change)="theme.toggleDark($event.checked)">
+            </mat-slide-toggle>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Theme color row -->
+        <div class="theme-row">
+            <div class="label">Theme color</div>
+
+            <mat-button-toggle-group [value]="theme.color()" (change)="theme.setColor($event.value)"
+                aria-label="Theme color">
+                <mat-button-toggle value="red">Red</mat-button-toggle>
+                <mat-button-toggle value="blue">Blue</mat-button-toggle>
+                <mat-button-toggle value="green">Green</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+    </mat-card-content>
+</mat-card>

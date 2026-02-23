@@ -1,0 +1,59 @@
+.settings-card {
+    margin-bottom: 16px;
+
+    mat-card-header {
+        padding-bottom: 8px;
+    }
+
+    mat-card-content {
+        padding-top: 8px;
+        padding-bottom: 16px;
+    }
+
+    // Optional: nicer card surface inside sidenav
+    background: var(--mat-sys-surface-container);
+    color: var(--mat-sys-on-surface);
+}
+
+/* --- Appearance Layout --- */
+
+.appearance-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.dark-mode-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.appearance-content mat-divider {
+    margin: 4px 0;
+}
+
+.theme-row {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .label {
+        font-size: 14px;
+        font-weight: 500;
+        opacity: 0.8;
+    }
+}
+
+mat-button-toggle-group {
+    border-radius: 8px;
+    overflow: hidden;
+    width: fit-content;
+    max-width: 100%;
+}
+
+@media (min-width: 600px) {
+    .appearance-content {
+        max-width: 400px;
+    }
+}
