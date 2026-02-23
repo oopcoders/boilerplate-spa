@@ -1,14 +1,11 @@
 @use '@angular/material' as mat;
 
 .container {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    height: 100vh;
 
     mat-sidenav {
-        @include mat.sidenav-overrides((container-shape: 0px, container-background-color: var(--mat-sys-surface)));
+        @include mat.sidenav-overrides((container-shape: 0px,
+                container-background-color: var(--mat-sys-surface)));
     }
 }
 
@@ -21,6 +18,6 @@
     padding: 10px 0px;
 }
 
-section mat-toolbar button {
+mat-toolbar button {
     margin: auto 5px auto 1px;
 }

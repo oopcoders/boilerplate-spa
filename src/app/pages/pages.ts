@@ -1,6 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { RouterLink, RouterOutlet } from "@angular/router";
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { RouterOutlet } from "@angular/router";
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,22 +15,45 @@ import { AsyncPipe } from '@angular/common';
 import { Settings } from '../shared/components/settings/settings';
 import { Navigation } from '../shared/components/navigation/navigation';
 
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map, shareReplay } from 'rxjs/operators';
+
 @Component({
   selector: 'app-pages',
-  imports: [RouterOutlet, MatSidenavModule, AsyncPipe, Settings, Navigation,
-    MatToolbarModule, MatButtonModule, MatListModule, MatIconModule],
+  imports: [
+    RouterOutlet,
+    MatSidenavModule,
+    AsyncPipe,
+    Settings,
+    Navigation,
+    MatToolbarModule,
+    MatButtonModule,
+    MatListModule,
+    MatIconModule
+  ],
   templateUrl: './pages.html',
   styleUrl: './pages.scss',
 })
 export class Pages implements OnInit {
+  @ViewChild('mainnav') mainnav!: MatSidenav;
   readonly loginDialog = inject(MatDialog);
   readonly registerDialog = inject(MatDialog);
   private store = inject(Store);
 
+  private breakpointObserver = inject(BreakpointObserver);
+
   isLoggedIn$: Observable<boolean> = of(false);
 
+  // ✅ handset breakpoint observable
+  readonly isHandset$ = this.breakpointObserver
+    .observe([Breakpoints.Handset])
+    .pipe(
+      map(r => r.matches),
+      shareReplay({ bufferSize: 1, refCount: true })
+    );
+
   ngOnInit(): void {
-    this.isLoggedIn$ = this.store.select(selectIsLoggedIn)
+    this.isLoggedIn$ = this.store.select(selectIsLoggedIn);
   }
 
   openRegisterDialog(): void {
@@ -47,4 +70,10 @@ export class Pages implements OnInit {
     });
   }
 
+  closeMainNavOnMobile(): void {
+    // Only close when it's acting like a drawer (mobile)
+    if (this.mainnav?.mode === 'over') {
+      this.mainnav.close();
+    }
+  }
 }

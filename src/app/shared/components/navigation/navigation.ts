@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -14,13 +14,18 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './navigation.scss',
 })
 export class Navigation {
-
   private readonly store = inject(Store);
 
   readonly isLoggedIn$ = this.store.select(selectIsLoggedIn);
 
-  logout(): void {
-    this.store.dispatch(ApiActions.logout())
+  @Output() navigate = new EventEmitter<void>();
+
+  onNavigate(): void {
+    this.navigate.emit();
   }
 
+  logout(): void {
+    this.store.dispatch(ApiActions.logout());
+    this.navigate.emit(); // close drawer after logout on mobile
+  }
 }

@@ -1,32 +1,41 @@
 <mat-sidenav-container class="container">
-    <mat-sidenav opened mode="side" #mainnav>
-        <app-navigation></app-navigation>
+
+    <!-- LEFT NAV -->
+    <mat-sidenav #mainnav [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="(isHandset$ | async) ? false : true">
+        <app-navigation (navigate)="closeMainNavOnMobile()"></app-navigation>
     </mat-sidenav>
+
+    <!-- RIGHT SETTINGS (keep as over) -->
     <mat-sidenav mode="over" #setting position="end">
         <app-settings></app-settings>
     </mat-sidenav>
-    <section>
+
+    <!-- MAIN CONTENT -->
+    <mat-sidenav-content>
         <mat-toolbar>
-            <button matMiniFab (click)="mainnav.toggle()" class="icon" aria-label="icon-button with menu icon">
+            <button matMiniFab (click)="mainnav.toggle()" class="icon" aria-label="Toggle main navigation">
                 <mat-icon>menu</mat-icon>
             </button>
+
             <span class="logo-title">BOILERPLATE</span>
             <span class="spacer"></span>
-            @if(isLoggedIn$ | async){
-            <button matMiniFab (click)="setting.toggle()"><!--Version 20 : matMiniFab  -- Version 19 : mat-mini-fab-->
+
+            @if (isLoggedIn$ | async) {
+            <button matMiniFab (click)="setting.toggle()" aria-label="Open settings">
                 <mat-icon>tune</mat-icon>
             </button>
-            }@else{
-            <button matButton="tonal"
-                (click)="openLoginDialog()"><!--Version 20 : matMiniFab  -- Version 19 : mat-mini-fab-->
+            } @else {
+            <button matButton="tonal" (click)="openLoginDialog()">
                 Log In
             </button>
-            <button matButton="filled"
-                (click)="openRegisterDialog()"><!--Version 20 : matMiniFab  -- Version 19 : mat-mini-fab-->
+            <button matButton="filled" (click)="openRegisterDialog()">
                 Sign Up
             </button>
             }
         </mat-toolbar>
+
         <router-outlet></router-outlet>
-    </section>
+    </mat-sidenav-content>
+
 </mat-sidenav-container>

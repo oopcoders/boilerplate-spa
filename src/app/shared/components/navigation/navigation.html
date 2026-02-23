@@ -2,7 +2,7 @@
     <mat-nav-list role="list">
         <mat-list-item>
             <mat-icon matListItemIcon>dashboard</mat-icon>
-            <a matListItemTitle routerLink="">Dashboard</a>
+            <a matListItemTitle routerLink="" (click)="onNavigate()">Dashboard</a>
         </mat-list-item>
     </mat-nav-list>
 
@@ -15,11 +15,12 @@
         } @else {
         <mat-list-item>
             <mat-icon matListItemIcon>account_circle</mat-icon>
-            <a matListItemTitle routerLink="/auth/login">Sign In</a>
+            <a matListItemTitle routerLink="/auth/login" (click)="onNavigate()">Sign In</a>
         </mat-list-item>
+
         <mat-list-item>
             <mat-icon matListItemIcon>add_2</mat-icon>
-            <a matListItemTitle routerLink="/auth/register">Create Account</a>
+            <a matListItemTitle routerLink="/auth/register" (click)="onNavigate()">Create Account</a>
         </mat-list-item>
         }
     </mat-nav-list>
